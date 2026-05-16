@@ -1,0 +1,2802 @@
+{
+  "project_summary": "\"EcoRoute\" is a smart, community-driven navigation app designed to help urban commuters reduce their carbon footprint while saving time and money. Unlike standard GPS apps, EcoRoute analyzes real-time traffic data, public transit schedules, and weather conditions to offer multi-modal travel options—like combining a short e-scooter ride with a subway trip—prioritizing the lowest-emission paths. Users earn \"Eco-Points\" for choosing green routes, which they can redeem for discounts at local sustainable businesses, while a built-in social feed allows friends to compete in weekly carbon-saving challenges.",
+  "technology_stack": {
+    "frontend": "React",
+    "backend": "Express.js",
+    "database": "PostgreSQL",
+    "deployment": "Vercel"
+  },
+  "phases": [
+    {
+      "issues": [
+        {
+          "id": "ER-001",
+          "title": "Initialize Monorepo Structure",
+          "description": "Set up the root directory structure for the EcoRoute monorepo, separating the frontend (React) and backend (Express) applications to ensure clean dependency management.",
+          "type": "setup",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Root directory, /client, and /server folders.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Initialize git repository",
+              "Create /client and /server directories",
+              "Initialize package.json in root for workspace management"
+            ],
+            "implementation_tasks": [
+              "Configure npm/yarn workspaces",
+              "Add initial README.md",
+              "Add .gitignore for root and sub-projects"
+            ],
+            "testing_tasks": [
+              "Verify workspace installation works",
+              "Ensure sub-folders are recognized as separate modules"
+            ],
+            "documentation_tasks": [
+              "Update README with project structure overview"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Root directory contains client and server folders",
+              "Workspaces are correctly linked",
+              "Git ignores node_modules and build artifacts"
+            ],
+            "automated_tests": false
+          },
+          "branch_name": "setup/init-repo",
+          "recommended_commits": [
+            "feat: initialize monorepo structure",
+            "chore: configure workspace dependencies"
+          ],
+          "estimated_hours": 4,
+          "dependencies": [],
+          "tags": [
+            "setup",
+            "infrastructure"
+          ],
+          "notes": "Use npm workspaces or yarn workspaces to manage dependencies from the root."
+        },
+        {
+          "id": "ER-002",
+          "title": "Define PostgreSQL Database Schema",
+          "description": "Design and implement the initial database schema using an ORM (Prisma) to support Users, Routes, Points, and Challenges.",
+          "type": "setup",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Database schema definition and migration files.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install Prisma ORM",
+              "Initialize Prisma schema"
+            ],
+            "implementation_tasks": [
+              "Define User model",
+              "Define Route model",
+              "Define Points/Rewards model",
+              "Define Challenges model"
+            ],
+            "testing_tasks": [
+              "Run prisma migrate dev",
+              "Verify table creation in PostgreSQL"
+            ],
+            "documentation_tasks": [
+              "Document schema relationships in README"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "All four tables exist in the database",
+              "Relationships (e.g., User-to-Routes) are correctly defined",
+              "Migrations are generated"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "setup/db-schema",
+          "recommended_commits": [
+            "feat: define initial database schema",
+            "feat: run initial migration"
+          ],
+          "estimated_hours": 6,
+          "dependencies": [
+            "ER-001"
+          ],
+          "tags": [
+            "database",
+            "backend"
+          ],
+          "notes": "Ensure foreign key constraints are properly set for user-related data."
+        },
+        {
+          "id": "ER-003",
+          "title": "Configure CI/CD Deployment Pipeline",
+          "description": "Set up GitHub Actions for automated testing and Vercel integration for continuous deployment of the frontend and backend.",
+          "type": "deployment",
+          "status": "todo",
+          "priority": "high",
+          "scope": "GitHub Actions workflows and Vercel project configuration.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Create .github/workflows directory",
+              "Link Vercel project to repository"
+            ],
+            "implementation_tasks": [
+              "Create CI workflow for linting/testing",
+              "Create CD workflow for Vercel deployment"
+            ],
+            "testing_tasks": [
+              "Trigger manual workflow run",
+              "Verify successful deployment to Vercel preview"
+            ],
+            "documentation_tasks": [
+              "Add deployment instructions to README"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Push to main triggers build",
+              "Vercel preview links are generated",
+              "CI fails on linting errors"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "setup/ci-cd",
+          "recommended_commits": [
+            "feat: add github actions workflow",
+            "feat: configure vercel deployment"
+          ],
+          "estimated_hours": 8,
+          "dependencies": [
+            "ER-001"
+          ],
+          "tags": [
+            "ci-cd",
+            "devops"
+          ],
+          "notes": "Ensure secrets are handled via GitHub Secrets."
+        },
+        {
+          "id": "ER-004",
+          "title": "Implement Environment Configuration",
+          "description": "Standardize environment variable management using dotenv across both client and server applications.",
+          "type": "setup",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Root-level and sub-project .env.example files.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install dotenv package",
+              "Create .env.example files"
+            ],
+            "implementation_tasks": [
+              "Configure server to load .env",
+              "Configure client to load .env.local"
+            ],
+            "testing_tasks": [
+              "Verify variables are accessible in code"
+            ],
+            "documentation_tasks": [
+              "Document required environment variables"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Application fails gracefully if required vars are missing",
+              "No secrets committed to git",
+              ".env.example provided for all environments"
+            ],
+            "automated_tests": false
+          },
+          "branch_name": "setup/env-vars",
+          "recommended_commits": [
+            "feat: add environment variable management",
+            "chore: add .env.example files"
+          ],
+          "estimated_hours": 3,
+          "dependencies": [
+            "ER-001"
+          ],
+          "tags": [
+            "security",
+            "configuration"
+          ],
+          "notes": "Add .env to .gitignore immediately."
+        },
+        {
+          "id": "ER-005",
+          "title": "Setup Linting and Formatting",
+          "description": "Configure ESLint and Prettier to enforce consistent code style across the monorepo.",
+          "type": "setup",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "Root configuration files and IDE settings.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install eslint and prettier",
+              "Create .eslintrc and .prettierrc"
+            ],
+            "implementation_tasks": [
+              "Configure shared rules",
+              "Add lint/format scripts to package.json"
+            ],
+            "testing_tasks": [
+              "Run linting on existing files",
+              "Verify formatting consistency"
+            ],
+            "documentation_tasks": [
+              "Add linting instructions to README"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Linting passes on all files",
+              "Prettier formats code correctly",
+              "Husky pre-commit hook added"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "setup/linting",
+          "recommended_commits": [
+            "feat: add eslint and prettier",
+            "feat: add pre-commit hooks"
+          ],
+          "estimated_hours": 4,
+          "dependencies": [
+            "ER-001"
+          ],
+          "tags": [
+            "code-quality",
+            "tooling"
+          ],
+          "notes": "Use a shared config if possible to keep rules consistent."
+        },
+        {
+          "id": "ER-006",
+          "title": "Configure Express API Boilerplate",
+          "description": "Set up the base Express.js server with essential middleware (CORS, JSON parsing, logging) and a basic health-check route.",
+          "type": "setup",
+          "status": "todo",
+          "priority": "high",
+          "scope": "/server directory.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install express, cors, helmet, morgan"
+            ],
+            "implementation_tasks": [
+              "Create server entry point (index.js)",
+              "Add health check endpoint",
+              "Configure middleware stack"
+            ],
+            "testing_tasks": [
+              "Run server locally",
+              "Test health check endpoint with curl"
+            ],
+            "documentation_tasks": [
+              "Update API documentation placeholder"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Server starts on defined port",
+              "CORS is configured",
+              "Health check returns 200 OK"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "setup/express-boilerplate",
+          "recommended_commits": [
+            "feat: initialize express server",
+            "feat: add basic middleware"
+          ],
+          "estimated_hours": 5,
+          "dependencies": [
+            "ER-001",
+            "ER-004"
+          ],
+          "tags": [
+            "backend",
+            "api"
+          ],
+          "notes": "Use helmet for basic security headers."
+        }
+      ],
+      "batchNumber": 1
+    },
+    {
+      "issues": [
+        {
+          "id": "AUTH-001",
+          "title": "Implement JWT Authentication Middleware",
+          "description": "Create a secure middleware to intercept requests, validate JWT tokens, and attach user context to the request object.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Backend authentication layer",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install jsonwebtoken and passport-jwt"
+            ],
+            "implementation_tasks": [
+              "Create verifyToken middleware",
+              "Implement token blacklisting logic",
+              "Configure secret key management via environment variables"
+            ],
+            "testing_tasks": [
+              "Unit test middleware with valid/invalid tokens",
+              "Test expired token handling"
+            ],
+            "documentation_tasks": [
+              "Document auth flow in API README"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Requests without valid tokens return 401",
+              "User ID is accessible in req.user after authentication",
+              "Token expiration is enforced"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "feat/auth-api",
+          "recommended_commits": [
+            "feat: add jwt verification middleware",
+            "refactor: secure auth routes"
+          ],
+          "estimated_hours": 6,
+          "dependencies": [],
+          "tags": [
+            "auth",
+            "security",
+            "backend"
+          ],
+          "notes": "Ensure secret keys are loaded from process.env and not hardcoded."
+        },
+        {
+          "id": "ROUTE-001",
+          "title": "Develop Multi-modal Dijkstra Implementation",
+          "description": "Implement a graph-based routing algorithm that considers transit, walking, and cycling nodes with weighted costs.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Routing engine core",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Define graph data structure schema"
+            ],
+            "implementation_tasks": [
+              "Implement Dijkstra's algorithm for pathfinding",
+              "Add cost-weighting logic for carbon emission factors",
+              "Handle multi-modal transitions"
+            ],
+            "testing_tasks": [
+              "Verify pathfinding accuracy between two nodes",
+              "Test edge cases with missing transit links"
+            ],
+            "documentation_tasks": [
+              "Document algorithm complexity and cost parameters"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Algorithm returns shortest path based on carbon cost",
+              "Supports switching between transit and walking modes"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "feat/route-engine",
+          "recommended_commits": [
+            "feat: implement base dijkstra algorithm",
+            "feat: add carbon cost weighting"
+          ],
+          "estimated_hours": 16,
+          "dependencies": [],
+          "tags": [
+            "routing",
+            "algorithm",
+            "backend"
+          ],
+          "notes": "Focus on performance; consider caching frequent routes."
+        },
+        {
+          "id": "POINTS-001",
+          "title": "Create Carbon Savings Calculation Service",
+          "description": "Build a service that calculates the difference in CO2 emissions between a standard car route and the selected multi-modal route.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Eco-points logic",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Define emission factor constants per transport mode"
+            ],
+            "implementation_tasks": [
+              "Create calculation service class",
+              "Implement formula: (Car_CO2 - Selected_CO2) * distance",
+              "Integrate with user profile update"
+            ],
+            "testing_tasks": [
+              "Unit test calculation accuracy",
+              "Test edge cases for zero-emission routes"
+            ],
+            "documentation_tasks": [
+              "Document emission factor sources"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Points awarded correlate directly to CO2 saved",
+              "Calculation handles floating point precision correctly"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "feat/points-logic",
+          "recommended_commits": [
+            "feat: add carbon calculation service",
+            "fix: handle precision in point math"
+          ],
+          "estimated_hours": 8,
+          "dependencies": [],
+          "tags": [
+            "gamification",
+            "logic",
+            "backend"
+          ],
+          "notes": "Use a standard library for decimal math to avoid floating point errors."
+        },
+        {
+          "id": "TRANSIT-001",
+          "title": "Integrate Real-time Transit API Client",
+          "description": "Build a robust client to fetch and normalize real-time transit data from third-party providers.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Data ingestion layer",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install axios or node-fetch"
+            ],
+            "implementation_tasks": [
+              "Create API client wrapper",
+              "Implement data normalization layer",
+              "Add retry logic for failed requests"
+            ],
+            "testing_tasks": [
+              "Mock API responses",
+              "Test error handling for API downtime"
+            ],
+            "documentation_tasks": [
+              "Document API integration endpoints"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Data is successfully fetched and mapped to internal schema",
+              "API failures are logged and handled gracefully"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "feat/transit-api",
+          "recommended_commits": [
+            "feat: add transit api client",
+            "feat: implement data normalization"
+          ],
+          "estimated_hours": 12,
+          "dependencies": [],
+          "tags": [
+            "integration",
+            "transit",
+            "api"
+          ],
+          "notes": "Implement circuit breaker pattern for external API calls."
+        },
+        {
+          "id": "CHALLENGE-001",
+          "title": "Implement Challenge CRUD Endpoints",
+          "description": "Create RESTful endpoints to manage community carbon-saving challenges.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "Challenge management API",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Define Challenge model in Prisma/Sequelize"
+            ],
+            "implementation_tasks": [
+              "Create GET, POST, PUT, DELETE endpoints",
+              "Add validation for challenge dates"
+            ],
+            "testing_tasks": [
+              "Test CRUD operations via Postman/Supertest"
+            ],
+            "documentation_tasks": [
+              "Update Swagger/OpenAPI docs"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Challenges can be created and retrieved",
+              "Validation prevents invalid date ranges"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "feat/challenges-api",
+          "recommended_commits": [
+            "feat: add challenge model",
+            "feat: implement challenge crud"
+          ],
+          "estimated_hours": 8,
+          "dependencies": [],
+          "tags": [
+            "api",
+            "challenges",
+            "crud"
+          ],
+          "notes": "Ensure proper authorization checks for challenge creation."
+        },
+        {
+          "id": "DB-001",
+          "title": "Configure PostgreSQL Connection Pooling",
+          "description": "Optimize database connectivity by implementing connection pooling to handle concurrent requests.",
+          "type": "setup",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Database infrastructure",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install pg-pool or configure ORM pool settings"
+            ],
+            "implementation_tasks": [
+              "Set pool size limits",
+              "Implement connection health checks"
+            ],
+            "testing_tasks": [
+              "Load test concurrent database connections"
+            ],
+            "documentation_tasks": [
+              "Document pool configuration in README"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Database connections remain stable under load",
+              "No connection leaks detected"
+            ],
+            "automated_tests": false
+          },
+          "branch_name": "setup/db-pooling",
+          "recommended_commits": [
+            "setup: configure pg connection pooling"
+          ],
+          "estimated_hours": 4,
+          "dependencies": [],
+          "tags": [
+            "database",
+            "performance",
+            "setup"
+          ],
+          "notes": "Monitor connection count in production environment."
+        },
+        {
+          "id": "AUTH-002",
+          "title": "Implement User Registration and Login Endpoints",
+          "description": "Create endpoints for user sign-up and login, including password hashing.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Authentication API",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install bcrypt"
+            ],
+            "implementation_tasks": [
+              "Hash passwords before storage",
+              "Implement login validation",
+              "Generate JWT on successful login"
+            ],
+            "testing_tasks": [
+              "Test password hashing",
+              "Test login with incorrect credentials"
+            ],
+            "documentation_tasks": [
+              "Document auth endpoints"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Passwords are never stored in plain text",
+              "Login returns valid JWT"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "feat/auth-api",
+          "recommended_commits": [
+            "feat: add registration endpoint",
+            "feat: add login endpoint"
+          ],
+          "estimated_hours": 6,
+          "dependencies": [
+            "AUTH-001"
+          ],
+          "tags": [
+            "auth",
+            "security"
+          ],
+          "notes": "Use a strong salt factor for bcrypt."
+        },
+        {
+          "id": "TEST-001",
+          "title": "Setup Jest and Supertest Integration Testing",
+          "description": "Establish a testing framework for the backend to ensure API reliability.",
+          "type": "testing",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Testing infrastructure",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install jest, supertest, ts-jest"
+            ],
+            "implementation_tasks": [
+              "Configure test environment",
+              "Create base test setup for database cleanup"
+            ],
+            "testing_tasks": [
+              "Write smoke test for server health check"
+            ],
+            "documentation_tasks": [
+              "Add testing instructions to README"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Tests run in CI environment",
+              "Database is reset between tests"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "setup/testing-framework",
+          "recommended_commits": [
+            "setup: add jest and supertest"
+          ],
+          "estimated_hours": 5,
+          "dependencies": [],
+          "tags": [
+            "testing",
+            "setup"
+          ],
+          "notes": "Ensure test database is separate from development database."
+        },
+        {
+          "id": "LOG-001",
+          "title": "Implement Centralized Logging",
+          "description": "Integrate Winston or Morgan for structured logging across the backend services.",
+          "type": "setup",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "Observability",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install winston"
+            ],
+            "implementation_tasks": [
+              "Configure log levels",
+              "Add request logging middleware",
+              "Setup file/console transport"
+            ],
+            "testing_tasks": [
+              "Verify logs are generated for API requests"
+            ],
+            "documentation_tasks": [
+              "Document log format"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "All API requests are logged",
+              "Errors include stack traces"
+            ],
+            "automated_tests": false
+          },
+          "branch_name": "setup/logging",
+          "recommended_commits": [
+            "setup: add winston logging"
+          ],
+          "estimated_hours": 3,
+          "dependencies": [],
+          "tags": [
+            "logging",
+            "observability"
+          ],
+          "notes": "Ensure sensitive data (passwords) is masked in logs."
+        },
+        {
+          "id": "ROUTE-002",
+          "title": "Implement Route Caching Strategy",
+          "description": "Add Redis caching for frequently requested routes to reduce API load.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "Routing engine performance",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install redis client"
+            ],
+            "implementation_tasks": [
+              "Implement cache lookup before routing logic",
+              "Set TTL for cached routes"
+            ],
+            "testing_tasks": [
+              "Verify cache hit/miss performance"
+            ],
+            "documentation_tasks": [
+              "Document cache strategy"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Repeated requests return cached results",
+              "Cache invalidation works on transit updates"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "feat/route-engine-cache",
+          "recommended_commits": [
+            "feat: add redis caching for routes"
+          ],
+          "estimated_hours": 6,
+          "dependencies": [
+            "ROUTE-001"
+          ],
+          "tags": [
+            "performance",
+            "caching",
+            "routing"
+          ],
+          "notes": "Use a reasonable TTL based on transit schedule frequency."
+        },
+        {
+          "id": "DOC-001",
+          "title": "Generate API Documentation",
+          "description": "Create comprehensive API documentation using Swagger/OpenAPI.",
+          "type": "documentation",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "Documentation",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install swagger-ui-express"
+            ],
+            "implementation_tasks": [
+              "Write OpenAPI spec for all endpoints",
+              "Configure swagger UI route"
+            ],
+            "testing_tasks": [
+              "Verify documentation renders correctly"
+            ],
+            "documentation_tasks": [
+              "Update README with link to docs"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "All endpoints documented",
+              "Documentation is accessible via /api-docs"
+            ],
+            "automated_tests": false
+          },
+          "branch_name": "docs/api-spec",
+          "recommended_commits": [
+            "docs: add openapi specification"
+          ],
+          "estimated_hours": 4,
+          "dependencies": [],
+          "tags": [
+            "documentation",
+            "api"
+          ],
+          "notes": "Keep documentation in sync with code changes."
+        }
+      ],
+      "batchNumber": 2
+    },
+    {
+      "issues": [
+        {
+          "id": "ER-027",
+          "title": "Implement Responsive Main Layout Shell",
+          "description": "Create the base application layout including a persistent navigation bar and a collapsible sidebar for mobile/desktop responsiveness.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Global layout components and CSS grid/flexbox structure.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install styled-components or Tailwind CSS",
+              "Configure base theme provider"
+            ],
+            "implementation_tasks": [
+              "Create Navbar component",
+              "Create Sidebar component",
+              "Implement responsive breakpoint logic"
+            ],
+            "testing_tasks": [
+              "Verify layout on mobile/tablet/desktop viewports"
+            ],
+            "documentation_tasks": [
+              "Update component library documentation"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Sidebar collapses on screens < 768px",
+              "Navbar remains sticky at the top",
+              "Main content area respects sidebar width"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "feat/ui-layout",
+          "recommended_commits": [
+            "feat: add responsive layout shell",
+            "feat: implement sidebar and navbar components"
+          ],
+          "estimated_hours": 6,
+          "dependencies": [],
+          "tags": [
+            "frontend",
+            "ui",
+            "layout"
+          ],
+          "notes": "Ensure accessibility (ARIA labels) is considered for navigation elements."
+        },
+        {
+          "id": "ER-028",
+          "title": "Develop Route Search Form Component",
+          "description": "Build the search interface allowing users to input origin, destination, and transit preferences.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Search form UI and local state management for inputs.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install react-hook-form",
+              "Setup Zod validation schema"
+            ],
+            "implementation_tasks": [
+              "Create input fields for origin/destination",
+              "Add preference toggles (bus, bike, walk)",
+              "Implement form submission handler"
+            ],
+            "testing_tasks": [
+              "Unit test form validation logic"
+            ],
+            "documentation_tasks": [
+              "Document form props"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Form validates required fields",
+              "Preferences are captured in state",
+              "Submit button triggers API call simulation"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "feat/search-ui",
+          "recommended_commits": [
+            "feat: create search form component",
+            "feat: add form validation with Zod"
+          ],
+          "estimated_hours": 8,
+          "dependencies": [
+            "ER-027"
+          ],
+          "tags": [
+            "frontend",
+            "search",
+            "forms"
+          ],
+          "notes": "Consider integrating Google Maps Autocomplete API later."
+        },
+        {
+          "id": "ER-029",
+          "title": "Create User Dashboard Component",
+          "description": "Develop the dashboard view to display current Eco-Points balance and a list of recent trips.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Dashboard view and data fetching hooks.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Create dashboard container"
+            ],
+            "implementation_tasks": [
+              "Build PointsDisplay component",
+              "Build RecentTripsList component",
+              "Connect to mock API service"
+            ],
+            "testing_tasks": [
+              "Verify data rendering with mock data"
+            ],
+            "documentation_tasks": [
+              "Update API integration docs"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Points balance updates correctly",
+              "Trips list displays at least 5 recent items",
+              "Empty state handled for new users"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "feat/dashboard",
+          "recommended_commits": [
+            "feat: build dashboard shell",
+            "feat: integrate points and trip data"
+          ],
+          "estimated_hours": 10,
+          "dependencies": [
+            "ER-027"
+          ],
+          "tags": [
+            "frontend",
+            "dashboard",
+            "user-profile"
+          ],
+          "notes": "Use React Query for data fetching."
+        },
+        {
+          "id": "ER-030",
+          "title": "Implement Social Feed UI",
+          "description": "Build the social feed component to display friend challenges and community leaderboards.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "Social feed layout and list rendering.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Create social feed container"
+            ],
+            "implementation_tasks": [
+              "Build ChallengeCard component",
+              "Build LeaderboardTable component",
+              "Implement tab switching logic"
+            ],
+            "testing_tasks": [
+              "Verify tab switching functionality"
+            ],
+            "documentation_tasks": [
+              "Add component usage examples"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Feed displays challenges correctly",
+              "Leaderboard sorts by points",
+              "Tabs switch between views without page reload"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "feat/social-feed",
+          "recommended_commits": [
+            "feat: add social feed layout",
+            "feat: implement leaderboard and challenges"
+          ],
+          "estimated_hours": 8,
+          "dependencies": [
+            "ER-027"
+          ],
+          "tags": [
+            "frontend",
+            "social",
+            "gamification"
+          ],
+          "notes": "Ensure images for user avatars have fallback placeholders."
+        },
+        {
+          "id": "ER-031",
+          "title": "Develop Rewards Redemption Interface",
+          "description": "Create the UI for users to browse and redeem Eco-Points at partner stores.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "Rewards catalog and redemption modal.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Create rewards page"
+            ],
+            "implementation_tasks": [
+              "Build RewardCard component",
+              "Implement redemption confirmation modal",
+              "Add filter by category"
+            ],
+            "testing_tasks": [
+              "Test modal open/close logic"
+            ],
+            "documentation_tasks": [
+              "Document redemption flow"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Rewards catalog displays items",
+              "Redemption modal shows confirmation",
+              "Insufficient points state handled"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "feat/rewards-ui",
+          "recommended_commits": [
+            "feat: create rewards catalog",
+            "feat: add redemption modal"
+          ],
+          "estimated_hours": 7,
+          "dependencies": [
+            "ER-029"
+          ],
+          "tags": [
+            "frontend",
+            "rewards",
+            "e-commerce"
+          ],
+          "notes": "Ensure points balance is refreshed after redemption."
+        },
+        {
+          "id": "ER-032",
+          "title": "Setup Global State Management",
+          "description": "Configure React Context API or Zustand for managing user session and global app state.",
+          "type": "setup",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Global state provider setup.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install Zustand",
+              "Create auth store",
+              "Create user preferences store"
+            ],
+            "implementation_tasks": [
+              "Wrap app in state providers",
+              "Implement persistence for session"
+            ],
+            "testing_tasks": [
+              "Verify state persists across reloads"
+            ],
+            "documentation_tasks": [
+              "Document state management patterns"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "User session persists",
+              "Global state is accessible across components"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "setup/global-state",
+          "recommended_commits": [
+            "setup: initialize global state store"
+          ],
+          "estimated_hours": 4,
+          "dependencies": [],
+          "tags": [
+            "frontend",
+            "state-management"
+          ],
+          "notes": "Zustand is preferred for simplicity."
+        },
+        {
+          "id": "ER-033",
+          "title": "Implement Authentication Guard",
+          "description": "Create a Higher-Order Component (HOC) or wrapper to protect private routes.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Routing security.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Create ProtectedRoute component"
+            ],
+            "implementation_tasks": [
+              "Check JWT in local storage",
+              "Redirect to login if unauthorized"
+            ],
+            "testing_tasks": [
+              "Test redirect behavior"
+            ],
+            "documentation_tasks": [
+              "Document route protection"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Unauthenticated users redirected to login",
+              "Authenticated users can access dashboard"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "feat/auth-guard",
+          "recommended_commits": [
+            "feat: add protected route wrapper"
+          ],
+          "estimated_hours": 3,
+          "dependencies": [
+            "ER-032"
+          ],
+          "tags": [
+            "frontend",
+            "security",
+            "auth"
+          ],
+          "notes": "Ensure redirect URL is handled after login."
+        },
+        {
+          "id": "ER-034",
+          "title": "Add Error Boundary Component",
+          "description": "Implement a global error boundary to catch UI rendering errors and show a fallback UI.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "Global error handling.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Create ErrorBoundary class component"
+            ],
+            "implementation_tasks": [
+              "Define fallback UI",
+              "Log errors to console/service"
+            ],
+            "testing_tasks": [
+              "Simulate component crash"
+            ],
+            "documentation_tasks": [
+              "Document error handling strategy"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "App does not white-screen on error",
+              "User sees friendly error message"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "feat/error-boundary",
+          "recommended_commits": [
+            "feat: add global error boundary"
+          ],
+          "estimated_hours": 3,
+          "dependencies": [
+            "ER-027"
+          ],
+          "tags": [
+            "frontend",
+            "reliability"
+          ],
+          "notes": "Consider Sentry integration for production."
+        },
+        {
+          "id": "ER-035",
+          "title": "Configure API Service Layer",
+          "description": "Create a centralized Axios instance with interceptors for JWT injection.",
+          "type": "setup",
+          "status": "todo",
+          "priority": "high",
+          "scope": "API communication.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install axios"
+            ],
+            "implementation_tasks": [
+              "Create base API instance",
+              "Add request interceptor for JWT",
+              "Add response interceptor for 401 handling"
+            ],
+            "testing_tasks": [
+              "Verify token is attached to headers"
+            ],
+            "documentation_tasks": [
+              "Document API service usage"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "All requests include Authorization header",
+              "401 errors trigger logout"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "setup/api-service",
+          "recommended_commits": [
+            "setup: configure axios instance"
+          ],
+          "estimated_hours": 4,
+          "dependencies": [
+            "ER-032"
+          ],
+          "tags": [
+            "frontend",
+            "api"
+          ],
+          "notes": "Centralize all API calls in a services folder."
+        },
+        {
+          "id": "ER-036",
+          "title": "Implement Loading Skeletons",
+          "description": "Add loading skeleton components to improve perceived performance during data fetching.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "low",
+          "scope": "UI/UX improvements.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install react-loading-skeleton"
+            ],
+            "implementation_tasks": [
+              "Add skeletons to dashboard",
+              "Add skeletons to social feed"
+            ],
+            "testing_tasks": [
+              "Verify skeletons appear during loading"
+            ],
+            "documentation_tasks": [
+              "Document skeleton usage"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Skeletons appear while data is fetching",
+              "Skeletons disappear when data is loaded"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "feat/loading-skeletons",
+          "recommended_commits": [
+            "feat: add loading skeletons"
+          ],
+          "estimated_hours": 4,
+          "dependencies": [
+            "ER-029",
+            "ER-030"
+          ],
+          "tags": [
+            "frontend",
+            "ux"
+          ],
+          "notes": "Keep skeleton styles consistent with the design system."
+        },
+        {
+          "id": "ER-037",
+          "title": "Setup Unit Testing Framework",
+          "description": "Configure Jest and React Testing Library for the frontend codebase.",
+          "type": "testing",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "Testing infrastructure.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install jest, @testing-library/react"
+            ],
+            "implementation_tasks": [
+              "Configure jest.config.js",
+              "Setup test environment"
+            ],
+            "testing_tasks": [
+              "Write smoke test for App component"
+            ],
+            "documentation_tasks": [
+              "Document testing guidelines"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Tests run successfully",
+              "Coverage report generated"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "setup/testing",
+          "recommended_commits": [
+            "setup: configure jest and rtl"
+          ],
+          "estimated_hours": 5,
+          "dependencies": [],
+          "tags": [
+            "frontend",
+            "testing"
+          ],
+          "notes": "Ensure tests run in CI pipeline."
+        },
+        {
+          "id": "ER-038",
+          "title": "Implement Dark Mode Support",
+          "description": "Add theme toggle functionality to support dark mode across the application.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "low",
+          "scope": "Theming.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Define dark/light theme objects"
+            ],
+            "implementation_tasks": [
+              "Create theme toggle button",
+              "Implement theme persistence in local storage"
+            ],
+            "testing_tasks": [
+              "Verify theme persists on refresh"
+            ],
+            "documentation_tasks": [
+              "Document theme implementation"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Theme toggles correctly",
+              "Colors update across all components"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "feat/dark-mode",
+          "recommended_commits": [
+            "feat: add dark mode support"
+          ],
+          "estimated_hours": 6,
+          "dependencies": [
+            "ER-027"
+          ],
+          "tags": [
+            "frontend",
+            "ui",
+            "theming"
+          ],
+          "notes": "Use CSS variables for easier theme switching."
+        },
+        {
+          "id": "ER-039",
+          "title": "Add Internationalization (i18n) Support",
+          "description": "Setup react-i18next to prepare the application for multi-language support.",
+          "type": "setup",
+          "status": "todo",
+          "priority": "low",
+          "scope": "Localization.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install react-i18next"
+            ],
+            "implementation_tasks": [
+              "Configure i18n instance",
+              "Create translation JSON files"
+            ],
+            "testing_tasks": [
+              "Verify language switching"
+            ],
+            "documentation_tasks": [
+              "Document translation process"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "App supports English and secondary language",
+              "Language preference persists"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "setup/i18n",
+          "recommended_commits": [
+            "setup: add i18n support"
+          ],
+          "estimated_hours": 5,
+          "dependencies": [],
+          "tags": [
+            "frontend",
+            "i18n"
+          ],
+          "notes": "Start with English and one other language."
+        }
+      ],
+      "batchNumber": 3
+    },
+    {
+      "issues": [
+        {
+          "id": "AUTH-001",
+          "title": "Implement JWT Interceptor for Axios",
+          "description": "Configure Axios interceptors to automatically attach JWT tokens from local storage to outgoing API requests.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Frontend API client configuration",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install axios"
+            ],
+            "implementation_tasks": [
+              "Create axios instance",
+              "Add request interceptor to inject Authorization header",
+              "Add response interceptor to handle 401 errors"
+            ],
+            "testing_tasks": [
+              "Verify header presence in browser network tab"
+            ],
+            "documentation_tasks": [
+              "Update API client README"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Requests include Bearer token",
+              "401 responses trigger logout/redirect"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "int/auth-flow",
+          "recommended_commits": [
+            "feat: add axios interceptor for JWT",
+            "fix: handle 401 unauthorized responses"
+          ],
+          "estimated_hours": 4,
+          "dependencies": [],
+          "tags": [
+            "auth",
+            "frontend"
+          ],
+          "notes": "Ensure token is retrieved from secure storage."
+        },
+        {
+          "id": "MAP-001",
+          "title": "Integrate Leaflet/Mapbox with Route State",
+          "description": "Connect the map component to the global route state to render polylines based on API responses.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Frontend Map component",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install leaflet/react-leaflet"
+            ],
+            "implementation_tasks": [
+              "Create MapContainer component",
+              "Implement Polyline rendering logic",
+              "Sync map zoom/center with route coordinates"
+            ],
+            "testing_tasks": [
+              "Verify route rendering on map load"
+            ],
+            "documentation_tasks": [
+              "Document map component props"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Route polylines render correctly",
+              "Map updates when route state changes"
+            ],
+            "automated_tests": false
+          },
+          "branch_name": "int/maps",
+          "recommended_commits": [
+            "feat: integrate map component",
+            "feat: render route polylines"
+          ],
+          "estimated_hours": 8,
+          "dependencies": [],
+          "tags": [
+            "maps",
+            "ui"
+          ],
+          "notes": "Use GeoJSON format for route data."
+        },
+        {
+          "id": "PTS-001",
+          "title": "Implement WebSocket for Real-time Points",
+          "description": "Establish a WebSocket connection to push point updates to the client without polling.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Backend and Frontend sync",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install socket.io"
+            ],
+            "implementation_tasks": [
+              "Initialize socket.io on Express",
+              "Create client-side socket context",
+              "Emit points-updated event on server"
+            ],
+            "testing_tasks": [
+              "Verify real-time UI update on point gain"
+            ],
+            "documentation_tasks": [
+              "Document event schema"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Points update instantly on UI",
+              "Connection handles re-auth"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "int/points-sync",
+          "recommended_commits": [
+            "feat: add socket.io server",
+            "feat: implement client-side socket listener"
+          ],
+          "estimated_hours": 12,
+          "dependencies": [
+            "AUTH-001"
+          ],
+          "tags": [
+            "real-time",
+            "points"
+          ],
+          "notes": "Ensure socket connection is authenticated."
+        },
+        {
+          "id": "CHL-001",
+          "title": "Create Join Challenge API Endpoint",
+          "description": "Develop the backend logic to associate a user with a specific challenge ID in the database.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "Backend API",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Create challenge controller"
+            ],
+            "implementation_tasks": [
+              "Define POST /api/challenges/:id/join",
+              "Add validation for existing participation",
+              "Update database record"
+            ],
+            "testing_tasks": [
+              "Test join success",
+              "Test duplicate join failure"
+            ],
+            "documentation_tasks": [
+              "Update Swagger/OpenAPI docs"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "User added to challenge table",
+              "Returns 201 on success"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "int/challenge-join",
+          "recommended_commits": [
+            "feat: add join challenge endpoint"
+          ],
+          "estimated_hours": 6,
+          "dependencies": [],
+          "tags": [
+            "backend",
+            "challenges"
+          ],
+          "notes": "Check for active status before joining."
+        },
+        {
+          "id": "PRF-001",
+          "title": "Build User Profile Data Fetcher",
+          "description": "Create a custom hook to fetch user profile data and carbon statistics from the backend.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "Frontend",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Create useProfile hook"
+            ],
+            "implementation_tasks": [
+              "Fetch /api/user/profile",
+              "Format carbon stats for display",
+              "Handle loading/error states"
+            ],
+            "testing_tasks": [
+              "Verify data mapping in UI"
+            ],
+            "documentation_tasks": [
+              "None"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Profile data displays correctly",
+              "Carbon stats are calculated"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "int/profile-sync",
+          "recommended_commits": [
+            "feat: create useProfile hook",
+            "feat: display profile stats"
+          ],
+          "estimated_hours": 5,
+          "dependencies": [
+            "AUTH-001"
+          ],
+          "tags": [
+            "profile",
+            "frontend"
+          ],
+          "notes": "Cache results to prevent redundant fetches."
+        },
+        {
+          "id": "AUTH-002",
+          "title": "Implement Protected Route Wrapper",
+          "description": "Create a React component to wrap private routes and redirect unauthenticated users.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Frontend Routing",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Create ProtectedRoute component"
+            ],
+            "implementation_tasks": [
+              "Check auth context",
+              "Implement redirect logic",
+              "Add loading state"
+            ],
+            "testing_tasks": [
+              "Verify redirect on logout"
+            ],
+            "documentation_tasks": [
+              "Update routing documentation"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Redirects to login if no token",
+              "Allows access if authenticated"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "int/auth-flow",
+          "recommended_commits": [
+            "feat: add protected route wrapper"
+          ],
+          "estimated_hours": 3,
+          "dependencies": [
+            "AUTH-001"
+          ],
+          "tags": [
+            "auth",
+            "routing"
+          ],
+          "notes": "Use React Router v6."
+        },
+        {
+          "id": "MAP-002",
+          "title": "Add User Location Marker",
+          "description": "Implement geolocation tracking to display the user's current position on the map.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Frontend Map component",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Access browser Geolocation API"
+            ],
+            "implementation_tasks": [
+              "Create marker component",
+              "Update marker position on change",
+              "Add accuracy circle"
+            ],
+            "testing_tasks": [
+              "Test with browser location simulation"
+            ],
+            "documentation_tasks": [
+              "None"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Marker follows user",
+              "Permission handling included"
+            ],
+            "automated_tests": false
+          },
+          "branch_name": "int/maps",
+          "recommended_commits": [
+            "feat: add user location marker"
+          ],
+          "estimated_hours": 4,
+          "dependencies": [
+            "MAP-001"
+          ],
+          "tags": [
+            "maps",
+            "geolocation"
+          ],
+          "notes": "Handle permission denial gracefully."
+        },
+        {
+          "id": "PTS-002",
+          "title": "Persist Points History to Database",
+          "description": "Ensure every point update is logged in the database for audit and history tracking.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Backend",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Create PointsHistory model"
+            ],
+            "implementation_tasks": [
+              "Update points controller to write to history",
+              "Add transaction support"
+            ],
+            "testing_tasks": [
+              "Verify database entries"
+            ],
+            "documentation_tasks": [
+              "Update DB schema docs"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "History table populated",
+              "Transactions ensure consistency"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "int/points-sync",
+          "recommended_commits": [
+            "feat: add points history logging"
+          ],
+          "estimated_hours": 6,
+          "dependencies": [
+            "PTS-001"
+          ],
+          "tags": [
+            "backend",
+            "database"
+          ],
+          "notes": "Use database transactions."
+        },
+        {
+          "id": "CHL-002",
+          "title": "UI Integration for Challenge Participation",
+          "description": "Add 'Join' buttons to the challenge list view and handle state updates.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "Frontend",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Create ChallengeCard component"
+            ],
+            "implementation_tasks": [
+              "Add join button handler",
+              "Optimistic UI update",
+              "Error handling for API failure"
+            ],
+            "testing_tasks": [
+              "Verify button state change"
+            ],
+            "documentation_tasks": [
+              "None"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Button triggers API",
+              "UI reflects joined status"
+            ],
+            "automated_tests": false
+          },
+          "branch_name": "int/challenge-join",
+          "recommended_commits": [
+            "feat: add join button to UI"
+          ],
+          "estimated_hours": 4,
+          "dependencies": [
+            "CHL-001"
+          ],
+          "tags": [
+            "ui",
+            "challenges"
+          ],
+          "notes": "Use optimistic UI updates for better UX."
+        },
+        {
+          "id": "PRF-002",
+          "title": "Implement Profile Edit Functionality",
+          "description": "Allow users to update their profile display name and preferences.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "Frontend and Backend",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Create PUT /api/user/profile"
+            ],
+            "implementation_tasks": [
+              "Create edit form",
+              "Add validation",
+              "Update database"
+            ],
+            "testing_tasks": [
+              "Verify profile update persistence"
+            ],
+            "documentation_tasks": [
+              "None"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Profile updates saved",
+              "Validation errors displayed"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "int/profile-sync",
+          "recommended_commits": [
+            "feat: add profile edit endpoint",
+            "feat: add profile edit form"
+          ],
+          "estimated_hours": 7,
+          "dependencies": [
+            "PRF-001"
+          ],
+          "tags": [
+            "profile",
+            "form"
+          ],
+          "notes": "Sanitize user input."
+        },
+        {
+          "id": "AUTH-003",
+          "title": "Add Logout and Token Cleanup",
+          "description": "Implement secure logout that clears local storage and invalidates the session.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Frontend",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Create logout function"
+            ],
+            "implementation_tasks": [
+              "Clear local storage",
+              "Reset auth context",
+              "Redirect to landing"
+            ],
+            "testing_tasks": [
+              "Verify token removal"
+            ],
+            "documentation_tasks": [
+              "None"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "User logged out",
+              "State reset"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "int/auth-flow",
+          "recommended_commits": [
+            "feat: implement logout"
+          ],
+          "estimated_hours": 2,
+          "dependencies": [
+            "AUTH-001"
+          ],
+          "tags": [
+            "auth"
+          ],
+          "notes": "Clear sensitive data from memory."
+        },
+        {
+          "id": "MAP-003",
+          "title": "Optimize Map Rendering Performance",
+          "description": "Implement memoization for map components to prevent unnecessary re-renders.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "Frontend",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Analyze render cycles"
+            ],
+            "implementation_tasks": [
+              "Use React.memo",
+              "Use useCallback for event handlers"
+            ],
+            "testing_tasks": [
+              "Verify performance with React DevTools"
+            ],
+            "documentation_tasks": [
+              "None"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Map renders smoothly",
+              "No redundant re-renders"
+            ],
+            "automated_tests": false
+          },
+          "branch_name": "int/maps",
+          "recommended_commits": [
+            "perf: memoize map components"
+          ],
+          "estimated_hours": 3,
+          "dependencies": [
+            "MAP-001"
+          ],
+          "tags": [
+            "performance",
+            "maps"
+          ],
+          "notes": "Focus on the polyline layer."
+        },
+        {
+          "id": "PTS-003",
+          "title": "Add Points Leaderboard API",
+          "description": "Create an endpoint to fetch the top 10 users by points for gamification.",
+          "type": "feature",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "Backend",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Create leaderboard controller"
+            ],
+            "implementation_tasks": [
+              "Write SQL query for top users",
+              "Add caching layer"
+            ],
+            "testing_tasks": [
+              "Verify leaderboard order"
+            ],
+            "documentation_tasks": [
+              "Update API docs"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Returns top 10 users",
+              "Sorted by points"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "int/points-sync",
+          "recommended_commits": [
+            "feat: add leaderboard endpoint"
+          ],
+          "estimated_hours": 5,
+          "dependencies": [
+            "PTS-002"
+          ],
+          "tags": [
+            "backend",
+            "gamification"
+          ],
+          "notes": "Cache for 5 minutes."
+        }
+      ],
+      "batchNumber": 4
+    },
+    {
+      "issues": [
+        {
+          "id": "ER-TEST-001",
+          "title": "Implement Jest Unit Tests for Route Calculation Engine",
+          "description": "Develop a comprehensive suite of unit tests for the core route calculation algorithms in the Express.js backend to ensure accuracy in carbon emission estimation and multi-modal pathfinding.",
+          "type": "testing",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Backend service layer responsible for route logic and emission calculations.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install jest and ts-jest",
+              "Configure jest.config.js for ESM/CommonJS compatibility"
+            ],
+            "implementation_tasks": [
+              "Create test mocks for transit API responses",
+              "Write test cases for edge cases (e.g., zero-emission routes, invalid coordinates)",
+              "Implement test coverage for emission calculation formulas"
+            ],
+            "testing_tasks": [
+              "Run npm test with --coverage flag",
+              "Verify 80% minimum branch coverage"
+            ],
+            "documentation_tasks": [
+              "Update README.md with instructions on running backend unit tests"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "All route calculation logic is covered by tests",
+              "Mocked API responses simulate real-world transit data",
+              "Tests run in under 5 seconds"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "test/backend-unit",
+          "recommended_commits": [
+            "feat: setup jest environment",
+            "test: add unit tests for route calculation engine"
+          ],
+          "estimated_hours": 8,
+          "dependencies": [],
+          "tags": [
+            "backend",
+            "testing",
+            "jest"
+          ],
+          "notes": "Ensure that the emission calculation logic is decoupled from external API calls to facilitate easier mocking."
+        },
+        {
+          "id": "ER-TEST-002",
+          "title": "Setup React Testing Library for Core UI Components",
+          "description": "Implement unit tests for critical UI components including the RouteSearchForm and EcoPointsDisplay to ensure component state and rendering logic are robust.",
+          "type": "testing",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Frontend components in src/components directory.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install @testing-library/react and @testing-library/jest-dom",
+              "Configure vitest or jest for React environment"
+            ],
+            "implementation_tasks": [
+              "Write tests for RouteSearchForm input validation",
+              "Write tests for EcoPointsDisplay state updates",
+              "Mock Context API providers for component isolation"
+            ],
+            "testing_tasks": [
+              "Verify component rendering with various props",
+              "Test user interaction events (clicks, form submissions)"
+            ],
+            "documentation_tasks": [
+              "Add testing guidelines to frontend documentation"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Core components render without errors",
+              "User interactions trigger expected state changes",
+              "Tests pass in CI/CD pipeline"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "test/frontend-unit",
+          "recommended_commits": [
+            "feat: configure react testing library",
+            "test: add unit tests for core UI components"
+          ],
+          "estimated_hours": 6,
+          "dependencies": [],
+          "tags": [
+            "frontend",
+            "testing",
+            "react"
+          ],
+          "notes": "Focus on testing behavior rather than implementation details."
+        },
+        {
+          "id": "ER-TEST-003",
+          "title": "Implement Integration Tests for User Authentication and Routing Flow",
+          "description": "Create integration tests to verify the interaction between the Express.js API, PostgreSQL database, and JWT authentication middleware.",
+          "type": "testing",
+          "status": "todo",
+          "priority": "high",
+          "scope": "API endpoints for user login, registration, and route history retrieval.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Setup test database instance (PostgreSQL)",
+              "Configure supertest for HTTP assertions"
+            ],
+            "implementation_tasks": [
+              "Write integration test for JWT protected routes",
+              "Write test for database persistence during route saving",
+              "Implement database cleanup hooks after tests"
+            ],
+            "testing_tasks": [
+              "Verify status codes and response payloads",
+              "Check database state after API requests"
+            ],
+            "documentation_tasks": [
+              "Document integration test setup in internal wiki"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "API returns 401 for unauthenticated requests",
+              "Valid JWTs allow access to protected routes",
+              "Database records are correctly created/updated"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "test/integration",
+          "recommended_commits": [
+            "feat: add supertest for API integration",
+            "test: implement auth and routing integration tests"
+          ],
+          "estimated_hours": 10,
+          "dependencies": [
+            "ER-TEST-001"
+          ],
+          "tags": [
+            "backend",
+            "integration",
+            "api"
+          ],
+          "notes": "Use a dedicated test database to avoid polluting development data."
+        },
+        {
+          "id": "ER-TEST-004",
+          "title": "Perform Load Testing on Route Calculation API",
+          "description": "Simulate concurrent user traffic to identify potential bottlenecks in the route calculation service and ensure API stability under load.",
+          "type": "testing",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "Route calculation API endpoint (/api/v1/routes).",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install k6 or Artillery",
+              "Define load testing scenarios (e.g., 50 concurrent users)"
+            ],
+            "implementation_tasks": [
+              "Create load test script for route requests",
+              "Configure threshold for response time (e.g., < 500ms)"
+            ],
+            "testing_tasks": [
+              "Execute load tests in staging environment",
+              "Analyze results for memory leaks or high CPU usage"
+            ],
+            "documentation_tasks": [
+              "Summarize performance findings in a report"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "API handles 50 concurrent requests without crashing",
+              "Average response time remains within acceptable limits",
+              "No database connection pool exhaustion"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "test/load",
+          "recommended_commits": [
+            "feat: add k6 load testing scripts",
+            "test: execute performance benchmarks"
+          ],
+          "estimated_hours": 6,
+          "dependencies": [
+            "ER-TEST-003"
+          ],
+          "tags": [
+            "performance",
+            "testing",
+            "load"
+          ],
+          "notes": "Run these tests in a staging environment that mirrors production hardware."
+        },
+        {
+          "id": "ER-TEST-005",
+          "title": "Implement Cypress E2E Tests for User Journey",
+          "description": "Automate the complete user journey from login to searching for a low-emission route and viewing the results.",
+          "type": "testing",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Full application flow (Frontend + Backend).",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install Cypress",
+              "Configure base URL and environment variables"
+            ],
+            "implementation_tasks": [
+              "Write E2E test for user login flow",
+              "Write E2E test for searching and selecting a route",
+              "Implement custom Cypress commands for authentication"
+            ],
+            "testing_tasks": [
+              "Run tests in headless mode",
+              "Verify UI updates after API responses"
+            ],
+            "documentation_tasks": [
+              "Add E2E test execution instructions to README"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "User can successfully log in and view routes",
+              "UI reflects data returned from backend",
+              "Tests are stable and non-flaky"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "test/e2e",
+          "recommended_commits": [
+            "feat: setup cypress",
+            "test: add E2E journey tests"
+          ],
+          "estimated_hours": 12,
+          "dependencies": [
+            "ER-TEST-002",
+            "ER-TEST-003"
+          ],
+          "tags": [
+            "e2e",
+            "testing",
+            "cypress"
+          ],
+          "notes": "Use data-cy attributes for selecting elements to ensure test resilience."
+        }
+      ],
+      "batchNumber": 5
+    },
+    {
+      "issues": [
+        {
+          "id": "DEPLOY-001",
+          "title": "Configure Vercel Production Environment Variables",
+          "description": "Securely inject production-grade environment variables into the Vercel project settings to ensure the application connects to the production database and external transit APIs.",
+          "type": "deployment",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Vercel project dashboard configuration and local .env.production template creation.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Audit all required environment variables from development",
+              "Generate secure production secrets for JWT_SECRET"
+            ],
+            "implementation_tasks": [
+              "Add DATABASE_URL, JWT_SECRET, and API_KEYs to Vercel project settings",
+              "Create .env.example for production reference"
+            ],
+            "testing_tasks": [
+              "Verify environment variable injection via a test deployment build"
+            ],
+            "documentation_tasks": [
+              "Update README with environment variable setup instructions"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "All production secrets are masked in Vercel UI",
+              "Application successfully connects to production DB using injected variables"
+            ],
+            "automated_tests": false
+          },
+          "branch_name": "deploy/prod-config",
+          "recommended_commits": [
+            "feat: add production environment variables to Vercel",
+            "docs: update env documentation"
+          ],
+          "estimated_hours": 4,
+          "dependencies": [],
+          "tags": [
+            "deployment",
+            "security",
+            "vercel"
+          ],
+          "notes": "Ensure no sensitive keys are committed to the repository."
+        },
+        {
+          "id": "DEPLOY-002",
+          "title": "Execute Production Database Migrations",
+          "description": "Run Prisma/Sequelize migrations against the production PostgreSQL instance to align the schema with the latest application requirements.",
+          "type": "deployment",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Production database schema synchronization.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Create a database backup snapshot",
+              "Verify connectivity to production DB from migration runner"
+            ],
+            "implementation_tasks": [
+              "Run migration command against production endpoint",
+              "Verify schema version table update"
+            ],
+            "testing_tasks": [
+              "Perform smoke test on core database queries"
+            ],
+            "documentation_tasks": [
+              "Document migration execution procedure"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Database schema matches local development schema",
+              "No data loss occurred during migration"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "deploy/db-migration",
+          "recommended_commits": [
+            "chore: run production database migrations"
+          ],
+          "estimated_hours": 6,
+          "dependencies": [
+            "DEPLOY-001"
+          ],
+          "tags": [
+            "database",
+            "migration",
+            "production"
+          ],
+          "notes": "Perform this during a low-traffic window."
+        },
+        {
+          "id": "DEPLOY-003",
+          "title": "Configure Custom Domain and SSL",
+          "description": "Map the production domain to the Vercel deployment and ensure SSL/TLS certificates are automatically provisioned.",
+          "type": "setup",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "DNS settings and Vercel domain configuration.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Access DNS provider dashboard",
+              "Prepare CNAME/A records"
+            ],
+            "implementation_tasks": [
+              "Add domain to Vercel project",
+              "Configure DNS records",
+              "Verify SSL certificate generation"
+            ],
+            "testing_tasks": [
+              "Verify HTTPS connectivity",
+              "Check for mixed content warnings"
+            ],
+            "documentation_tasks": [
+              "Update domain configuration guide"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Domain resolves to production deployment",
+              "SSL certificate is valid and active"
+            ],
+            "automated_tests": false
+          },
+          "branch_name": "deploy/domain",
+          "recommended_commits": [
+            "feat: configure custom domain mapping"
+          ],
+          "estimated_hours": 3,
+          "dependencies": [
+            "DEPLOY-001"
+          ],
+          "tags": [
+            "dns",
+            "ssl",
+            "infrastructure"
+          ],
+          "notes": "DNS propagation may take up to 24 hours."
+        },
+        {
+          "id": "DEPLOY-004",
+          "title": "Implement Monitoring and Error Tracking",
+          "description": "Integrate Sentry or similar error tracking and Vercel Analytics to monitor production performance and runtime exceptions.",
+          "type": "setup",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "Frontend and Backend error reporting integration.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Create project in Sentry",
+              "Obtain DSN keys"
+            ],
+            "implementation_tasks": [
+              "Initialize Sentry SDK in Express.js",
+              "Initialize Sentry SDK in React",
+              "Enable Vercel Web Analytics"
+            ],
+            "testing_tasks": [
+              "Trigger a test error to verify Sentry capture"
+            ],
+            "documentation_tasks": [
+              "Add monitoring dashboard links to team wiki"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Errors are captured in Sentry",
+              "Performance metrics are visible in Vercel dashboard"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "deploy/monitoring",
+          "recommended_commits": [
+            "feat: integrate Sentry error tracking",
+            "feat: enable Vercel analytics"
+          ],
+          "estimated_hours": 5,
+          "dependencies": [
+            "DEPLOY-001"
+          ],
+          "tags": [
+            "monitoring",
+            "observability",
+            "sentry"
+          ],
+          "notes": "Ensure DSN is stored as an environment variable."
+        },
+        {
+          "id": "DEPLOY-005",
+          "title": "Final Production Build Audit",
+          "description": "Conduct a comprehensive review of production build artifacts, bundle sizes, and server logs to ensure optimal performance before public release.",
+          "type": "testing",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Build output analysis and log verification.",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Run production build locally",
+              "Analyze bundle size"
+            ],
+            "implementation_tasks": [
+              "Review Vercel build logs for warnings",
+              "Audit console output for production errors"
+            ],
+            "testing_tasks": [
+              "Run lighthouse audit on production preview",
+              "Verify API response times"
+            ],
+            "documentation_tasks": [
+              "Create build audit report"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "No critical build warnings",
+              "Lighthouse performance score > 80",
+              "Logs show no runtime errors on startup"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "deploy/audit",
+          "recommended_commits": [
+            "chore: perform final production build audit"
+          ],
+          "estimated_hours": 6,
+          "dependencies": [
+            "DEPLOY-002",
+            "DEPLOY-004"
+          ],
+          "tags": [
+            "audit",
+            "performance",
+            "testing"
+          ],
+          "notes": "Focus on identifying large dependencies that impact load time."
+        }
+      ],
+      "batchNumber": 6
+    },
+    {
+      "issues": [
+        {
+          "id": "DOC-001",
+          "title": "Implement OpenAPI/Swagger Specification for REST API",
+          "description": "Create a comprehensive OpenAPI 3.0 specification file to document all existing Express.js endpoints, including request schemas, response models, and authentication requirements.",
+          "type": "documentation",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Backend API routes and data models",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Install swagger-ui-express and swagger-jsdoc"
+            ],
+            "implementation_tasks": [
+              "Annotate existing controllers with JSDoc/Swagger tags",
+              "Define reusable schemas for User, Route, and EcoPoint models",
+              "Configure Swagger UI route at /api-docs"
+            ],
+            "testing_tasks": [
+              "Verify all endpoints appear in Swagger UI",
+              "Test schema validation against sample requests"
+            ],
+            "documentation_tasks": [
+              "Update API documentation README section"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Swagger UI is accessible at /api-docs",
+              "All API endpoints are documented with request/response examples",
+              "Authentication headers are clearly defined for protected routes"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "doc/api",
+          "recommended_commits": [
+            "feat: add swagger-jsdoc configuration",
+            "docs: annotate user and routing endpoints"
+          ],
+          "estimated_hours": 12,
+          "dependencies": [],
+          "tags": [
+            "api",
+            "documentation",
+            "swagger"
+          ],
+          "notes": "Ensure that JWT authentication security schemes are correctly defined in the global Swagger config."
+        },
+        {
+          "id": "DOC-002",
+          "title": "Create Comprehensive Local Development Setup Guide",
+          "description": "Develop a step-by-step README.md guide to streamline the onboarding process for new developers, covering environment variables, database setup, and service orchestration.",
+          "type": "setup",
+          "status": "todo",
+          "priority": "high",
+          "scope": "Root project README and setup scripts",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Audit current environment variable requirements"
+            ],
+            "implementation_tasks": [
+              "Document Node.js version requirements",
+              "Create .env.example file",
+              "Write instructions for PostgreSQL local installation and migration",
+              "Add 'Getting Started' section"
+            ],
+            "testing_tasks": [
+              "Verify setup steps on a clean machine"
+            ],
+            "documentation_tasks": [
+              "Finalize README.md formatting"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "New developer can set up the project using only the README",
+              "Database migrations are clearly explained",
+              "All environment variables are documented"
+            ],
+            "automated_tests": false
+          },
+          "branch_name": "doc/setup",
+          "recommended_commits": [
+            "docs: create comprehensive setup guide",
+            "chore: add .env.example file"
+          ],
+          "estimated_hours": 6,
+          "dependencies": [],
+          "tags": [
+            "onboarding",
+            "setup"
+          ],
+          "notes": "Include troubleshooting tips for common PostgreSQL connection issues."
+        },
+        {
+          "id": "DOC-003",
+          "title": "Document System Architecture and Data Flow",
+          "description": "Create a visual and textual representation of the EcoRoute architecture, including the interaction between the React frontend, Express backend, and external transit APIs.",
+          "type": "documentation",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "System design documentation",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Select diagramming tool (e.g., Mermaid.js or Lucidchart)"
+            ],
+            "implementation_tasks": [
+              "Create high-level architecture diagram",
+              "Document data flow for route calculation",
+              "Describe background worker service responsibilities"
+            ],
+            "testing_tasks": [
+              "Review diagrams for technical accuracy"
+            ],
+            "documentation_tasks": [
+              "Embed diagrams in ARCHITECTURE.md"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Architecture diagram covers all major components",
+              "Data flow for Eco-Points calculation is documented",
+              "External API dependencies are mapped"
+            ],
+            "automated_tests": false
+          },
+          "branch_name": "doc/arch",
+          "recommended_commits": [
+            "docs: add system architecture overview",
+            "docs: include data flow diagrams"
+          ],
+          "estimated_hours": 8,
+          "dependencies": [
+            "DOC-001"
+          ],
+          "tags": [
+            "architecture",
+            "documentation"
+          ],
+          "notes": "Use Mermaid.js for diagrams to keep them version-controlled within the repository."
+        },
+        {
+          "id": "DOC-004",
+          "title": "Establish Contribution Guidelines",
+          "description": "Define the workflow for contributing to EcoRoute, including branch naming conventions, commit message standards, and pull request review processes.",
+          "type": "documentation",
+          "status": "todo",
+          "priority": "low",
+          "scope": "CONTRIBUTING.md file",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Research standard open-source contribution templates"
+            ],
+            "implementation_tasks": [
+              "Define branch naming strategy",
+              "Set up commit message linting rules",
+              "Outline PR template requirements"
+            ],
+            "testing_tasks": [
+              "Validate guidelines against existing project workflow"
+            ],
+            "documentation_tasks": [
+              "Draft CONTRIBUTING.md"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Contribution guidelines are clearly stated",
+              "PR template is created",
+              "Commit message standards are defined"
+            ],
+            "automated_tests": false
+          },
+          "branch_name": "doc/contribute",
+          "recommended_commits": [
+            "docs: add contribution guidelines",
+            "docs: create pull request template"
+          ],
+          "estimated_hours": 4,
+          "dependencies": [],
+          "tags": [
+            "community",
+            "process"
+          ],
+          "notes": "Keep the guidelines concise to encourage adoption."
+        },
+        {
+          "id": "DOC-005",
+          "title": "Document Production Deployment Procedures",
+          "description": "Create a deployment manual detailing the steps to deploy the React frontend to Vercel and the Express backend to a production environment, including environment configuration.",
+          "type": "deployment",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "Deployment documentation",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Review current Vercel deployment configuration"
+            ],
+            "implementation_tasks": [
+              "Document Vercel build settings",
+              "Write guide for database migration in production",
+              "Document secret management for production environment variables"
+            ],
+            "testing_tasks": [
+              "Verify deployment steps against staging environment"
+            ],
+            "documentation_tasks": [
+              "Create DEPLOY.md"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Deployment steps are reproducible",
+              "Environment variable management is secure",
+              "Database migration process is documented"
+            ],
+            "automated_tests": false
+          },
+          "branch_name": "doc/deploy",
+          "recommended_commits": [
+            "docs: add production deployment guide"
+          ],
+          "estimated_hours": 6,
+          "dependencies": [
+            "DOC-002"
+          ],
+          "tags": [
+            "deployment",
+            "devops"
+          ],
+          "notes": "Emphasize security best practices for production secrets."
+        },
+        {
+          "id": "DOC-006",
+          "title": "Standardize API Error Response Documentation",
+          "description": "Formalize the error handling documentation to ensure all API consumers understand the standard error object structure and HTTP status codes used by EcoRoute.",
+          "type": "documentation",
+          "status": "todo",
+          "priority": "medium",
+          "scope": "API documentation",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Review existing error handling middleware"
+            ],
+            "implementation_tasks": [
+              "Define standard error schema in OpenAPI",
+              "Document common error codes (400, 401, 403, 404, 500)",
+              "Provide examples of error responses"
+            ],
+            "testing_tasks": [
+              "Verify error schemas in Swagger UI"
+            ],
+            "documentation_tasks": [
+              "Update API documentation"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "All error responses follow a consistent format",
+              "Error codes are documented in the API spec",
+              "Examples provided for each error type"
+            ],
+            "automated_tests": true
+          },
+          "branch_name": "doc/api",
+          "recommended_commits": [
+            "docs: standardize error response documentation"
+          ],
+          "estimated_hours": 5,
+          "dependencies": [
+            "DOC-001"
+          ],
+          "tags": [
+            "api",
+            "error-handling"
+          ],
+          "notes": "Ensure consistency between frontend error handling and backend documentation."
+        },
+        {
+          "id": "DOC-007",
+          "title": "Create Project Glossary and Terminology Guide",
+          "description": "Define key terms used within the EcoRoute project (e.g., 'Eco-Points', 'Multi-modal', 'Carbon Footprint') to ensure consistent communication across the codebase and documentation.",
+          "type": "documentation",
+          "status": "todo",
+          "priority": "low",
+          "scope": "Project documentation",
+          "technical_checklist": {
+            "setup_tasks": [
+              "Identify domain-specific terminology"
+            ],
+            "implementation_tasks": [
+              "Compile glossary list",
+              "Define terms clearly",
+              "Add glossary to project documentation root"
+            ],
+            "testing_tasks": [
+              "Review for clarity and consistency"
+            ],
+            "documentation_tasks": [
+              "Finalize GLOSSARY.md"
+            ]
+          },
+          "acceptance_criteria": {
+            "criteria": [
+              "Glossary covers at least 10 core project terms",
+              "Definitions are aligned with project goals"
+            ],
+            "automated_tests": false
+          },
+          "branch_name": "doc/glossary",
+          "recommended_commits": [
+            "docs: add project glossary"
+          ],
+          "estimated_hours": 3,
+          "dependencies": [],
+          "tags": [
+            "documentation",
+            "onboarding"
+          ],
+          "notes": "This will help new contributors understand the domain logic faster."
+        }
+      ],
+      "batchNumber": 7
+    }
+  ]
+}
